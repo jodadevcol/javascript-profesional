@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Media Player</title>
+
+	<!-- fonts -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;600;700&display=swap" rel="stylesheet">
+
+	<!-- styles -->
+	<link rel="stylesheet" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css">
+	<link rel="stylesheet" href="../assets/css/main.css">
+</head>
+
+<body>
+	<header class="hero">
+		<div class="container">
+			<a href="/ejercicios/">Go back</a>
+			<p><em>Abre la consola</em></p>
+			<p><code>this</code> se refiere a un objeto. Ese objeto es el que actualmente
+				está ejecutando un pedazo de código.</p>
+		</div>
+	</header>
+
+	<script>
+		// this en el scope global
+		console.log(`this: ${this}`);
+		// output: de manera global retornara el window
+
+		// this en el scope de una función
+		function whoIsThis() {
+			return this;
+		}
+
+		console.log(`whoIsThis(): ${whoIsThis()}`);
+		// output: al llamar la funcion directamente el valor por default
+		// este sera window debido que no tiene el modo strict
+
+		// this en el scope de una función en strict mode
+		function whoIsThisStrict() {
+			'use strict';
+			return this;
+		}
+
+		console.log(`whoIsThisStrict(): ${whoIsThisStrict()}`);
+		// output: al marcar como el use strict esto evitara algunos errores silenciosos de Javascript 
+		// cambiandolos para que arrojen mensajes de error.
+
+		// this en el contexto de un objeto
+		const person = {
+			name: 'Gabriel',
+			saludar: function () {
+				console.log(`Hola soy ${this.name}`);
+			},
+		};
+
+		person.saludar();
+
+		// this cuando sacamos a una función de un objeto
+		const accion = person.saludar;
+		accion();
+
+		// this en el contexto de una "clase"
+		function Person(name) {
+			// this = {}
+			this.name = name;
+		}
+
+		Person.prototype.saludar = function () {
+			console.log(`Me llamo ${this.name}`);
+		};
+
+		const angela = new Person('Angela');
+		angela.saludar();
+	</script>
+</body>
+
+</html>

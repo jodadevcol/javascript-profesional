@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Media Player</title>
+
+	<!-- fonts -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;600;700&display=swap" rel="stylesheet">
+
+	<!-- styles -->
+	<link rel="stylesheet" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css">
+	<link rel="stylesheet" href="../assets/css/main.css">
+</head>
+
+<body>
+	<header class="hero">
+		<div class="container">
+			<a href="/ejercicios/">Go back</a>
+			<p><em>Abre la consola</em></p>
+		</div>
+	</header>
+
+	<script>
+		// Establece `this` usando `call`
+		function saludar() {
+			console.log(`Hola. Soy ${this.name} ${this.apellido}`);
+		}
+
+		const richard = {
+			name: 'Richard',
+			apellido: 'Kaufman López',
+		};
+
+		saludar.call(richard);
+		// el primer argumento de call permite establecer el valor de 'this' de saludar()
+
+		// Establece `this` usando `call` y pasar argumentos a la función
+		function caminar(metros, direccion) {
+			console.log(`${this.name} camina ${metros} metros hacia ${direccion}.`);
+		}
+
+		caminar.call(richard, 400, 'norte');
+		// como en el ejemplo anterior, el primer argumento es el valor de 'this', los siguientes a este
+		// corresponden a los parametros que recibe la funcion 
+
+		// Establece `this` usando `apply` y pasar argumentos a la función
+		const valores = [800, 'noreste'];
+		caminar.apply(richard, valores);
+
+		/*
+			Call - comma
+			Apply - arreglo
+		*/
+
+		// Establecer `this` en una nueva función usando `bind`
+		const daniel = { name: 'Daniel', apellido: 'Sánchez' };
+		const danielSaluda = saludar.bind(daniel);
+		danielSaluda();
+
+		const danielCamina = caminar.bind(daniel, 2000);
+		danielCamina('oeste');
+
+		// Cuándo es útil usar uno de estos métodos
+		const buttons = document.getElementsByClassName('call-to-action');
+		// buttons.forEach(button => {
+		//   button.onclick = () => alert('Nunca pares de aprender!');
+		// });
+
+		// NodeList
+		Array.prototype.forEach.call(buttons, button => {
+			button.onclick = () => alert('Nunca pares de aprender!');
+		});
+	</script>
+</body>
+
+</html>
