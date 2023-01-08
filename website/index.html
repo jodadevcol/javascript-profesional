@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Media Player</title>
+
+	<!-- fonts -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;600;700&display=swap" rel="stylesheet">
+
+	<!-- styles -->
+	<link rel="stylesheet" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css">
+	<link rel="stylesheet" href="./assets/css/main.css">
+</head>
+
+<body>
+	<header class="hero">
+		<div class="container">
+			<h1>Media Player</h1>
+			<p>An extensible media player.</p>
+		</div>
+	</header>
+
+	<main>
+		<section class="movie-block">
+			<div class="container">
+				<div class="movie-block__content">
+					<video class="movie-block__video" data-node="video">
+						<source src="./assets/video/BigBuckBunny.mp4" />
+					</video>
+
+					<div class="movie-block__actions">
+						<button class="movie-block__action action--togglePlay" data-node="btn-togglePlay">Play/Pause</button>
+						<button class="movie-block__action action--toggleMute" data-node="btn-toggleMute">Mute/Unmute</button>
+					</div>
+				</div>
+			</div>
+		</section>
+	</main>
+
+	<script type="module" src="./assets/js/main.js"></script>
+</body>
+
+</html>
