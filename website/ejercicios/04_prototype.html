@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Media Player</title>
+
+	<!-- fonts -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;600;700&display=swap" rel="stylesheet">
+
+	<!-- styles -->
+	<link rel="stylesheet" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css">
+	<link rel="stylesheet" href="../assets/css/main.css">
+</head>
+
+<body>
+	<header class="hero">
+		<div class="container">
+			<a href="/ejercicios/">Go back</a>
+			<p><em>Abre la consola</em></p>
+		</div>
+	</header>
+
+	<script>
+		// OPCION 1
+		// Objeto 1 comun y corriente
+		// const zelda = {
+		// 	name: 'Zelda'
+		// }
+
+		// zelda.saludar = function () {
+		// 	console.log(`Hola soy ${this.name}`);
+		// }
+
+		// zelda.saludar()
+
+		// // Objeto 2 comun y corriente
+		// const link = {
+		// 	name: 'Link'
+		// }
+
+		// link.saludar = function () {
+		// 	console.log(`Hola soy ${this.name}`);
+		// }
+
+		// link.saludar()
+
+		// OPCION 2
+		// function Hero(name) {
+		// 	const hero = {
+		// 		name: name
+		// 	}
+
+		// 	hero.saludar = function () {
+		// 		console.log(`Hola me llamo ${this.name}`)
+		// 	}
+
+		// 	return hero
+		// }
+
+		// const zelda = Hero('Zelda')
+		// zelda.saludar();
+
+		// const link = Hero('Link')
+		// link.saludar();
+
+		// // OPCION 3 - Objeto con metodos de HERO
+		// const heroMethods = {
+		// 	saludar: function () {
+		// 		console.log(`Methods: Me llamo ${this.name}`);
+		// 	}
+		// }
+
+		// function Hero(name) {
+		// 	const hero = {
+		// 		name: name
+		// 	}
+
+		// 	hero.saludar = heroMethods.saludar
+
+		// 	return hero
+		// }
+
+		// const zelda = Hero('Zelda')
+		// zelda.saludar();
+
+		// const link = Hero('Link')
+		// link.saludar();
+
+		// // OPCION 4 - Objeto.create, permite heredar todos los metodos de un objeto a este nuevo
+		// const heroMethods = {
+		// 	saludar: function () {
+		// 		console.log(`Object.create: Me llamo ${this.name}`);
+		// 	}
+		// }
+
+		// function Hero(name) {
+		// 	const hero = Object.create(heroMethods)
+		// 	hero.name = name
+
+		// 	return hero
+		// }
+
+		// const zelda = Hero('Zelda')
+		// zelda.saludar();
+
+		// const link = Hero('Link')
+		// link.saludar();
+
+		// // OPCION 5 - Asignar methods por el proto
+		// function Hero(name) {
+		// 	const hero = Object.create(Hero.prototype)
+		// 	hero.name = name
+
+		// 	return hero
+		// }
+
+		// Hero.prototype.saludar = function () {
+		// 	console.log(`Hero.prototype: Me llamo ${this.name}`);
+		// }
+
+		// const zelda = Hero('Zelda')
+		// zelda.saludar();
+
+		// const link = Hero('Link')
+		// link.saludar();
+
+		// OPCION 6 - 
+		function Hero(name) {
+			// const hero = Object.create(Hero.prototype) con el atajo New este paso ocurre implicitamente
+			this.name = name
+			// return hero con el atajo New este paso ocurre implicitamente
+		}
+
+		Hero.prototype.saludar = function () {
+			console.log(`New: Me llamo ${this.name}`);
+		}
+
+		const zelda = new Hero('Zelda')
+		zelda.saludar();
+
+		const link = new Hero('Link')
+		link.saludar();
+	</script>
+</body>
+
+</html>
