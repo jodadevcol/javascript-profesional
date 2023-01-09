@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Media Player</title>
+
+	<!-- fonts -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;600;700&display=swap" rel="stylesheet">
+
+	<!-- styles -->
+	<link rel="stylesheet" href="../assets/css/normalize.css">
+	<link rel="stylesheet" href="../assets/css/main.css">
+</head>
+
+<body>
+	<header class="hero">
+		<div class="container">
+			<a href="/ejercicios/">Go back</a>
+			<p><em>Abre la consola</em></p>
+		</div>
+	</header>
+
+	<main>
+		<section class="movies-block">
+			<div class="container">
+				<ul class="movies-block__actions">
+					<li id="sequence" class="movies-block__action action--sequence is-active"><button>Get Top Movies in
+							Sequence</button></li>
+					<li id="parallel" class="movies-block__action action--parallel"><button>Get Top Movies in Parallel</button>
+					</li>
+					<li id="fastest" class="movies-block__action action--fastest"><button>Get Fastest Top Movie</button></li>
+				</ul>
+
+				<hr>
+
+				<article class="movies-block__content">
+					<div id="loading" class="movies-block__loading"></div>
+					<div id="movies" class="movies-block__items"></div>
+				</article>
+			</div>
+		</section>
+	</main>
+
+	<script>
+		const apiKey = 'b89fc45c2067cbd33560270639722eae'
+		const movieDB = {
+			images: {
+				origin: 'https://image.tmdb.org/t/p/original/',
+				w500: 'https://image.tmdb.org/t/p/w500/'
+			}
+		}
+		const loading = {
+			selector: '#loading',
+			status: false,
+			dataLoading: 'data-loading="container"',
+			templateLoading: function () {
+				return `
+					<div class="loading--container" ${this.dataLoading}>
+						<span>Loading...</span>
+					</div>
+				`
+			},
+			loadingNode: function () {
+				const loadingNode = document.querySelector(this.selector)
+				if (loadingNode === null) return null
+
+				return loadingNode
+			},
+			startLoading: function () {
+				let loadingNode = this.loadingNode()
+
+				if (loadingNode) {
+					loadingNode.insertAdjacentHTML('afterbegin', this.templateLoading())
+
+					this.loadingContainerNode = loadingNode.querySelector(`[${this.dataLoading}]`)
+				}
+			},
+			endLoading: function () {
+				let loadingContainerNode = this.loadingContainerNode
+
+				if (loadingContainerNode) {
+					this.loadingNode().removeChild(loadingContainerNode)
+				}
+			}
+		}
+
+		async function getMovie(id) {
+			const url = `https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}`
+			const response = await fetch(url)
+			const data = await response.json()
+
+			return data
+		}
+
+		async function getPopularMovies() {
+			const url = `https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=${apiKey}`
+			const response = await fetch(url)
+			const data = await response.json()
+
+			return data.results
+		}
+
+		async function getTopMoviesIds(n = 3) {
+			// return getPopularMovies().then(popularMovies => popularMovies.slice(0, n).map(movie => movie.id))
+
+			// try {
+			// 	const popularMovies = await getPopularMovies()
+			// 	const ids = popularMovies.slice(0, n).map(movie => movie.id)
+			// } catch (error) {
+			// 	consol.error(error.message)
+			// }
+
+			const popularMovies = await getPopularMovies()
+			const ids = popularMovies.slice(0, n).map(movie => movie.id)
+
+			return ids
+		}
+
+		function renderMovies(movies) {
+			const moviesContent = document.querySelector('#movies')
+			if (moviesContent === null) return null
+
+			let htmlMovie = ''
+
+			movies.forEach(movie => {
+				console.log(movie);
+				htmlMovie = `
+					<aside class="movie" id="${movie.id}">
+						<figure class="movie__picture">
+							<img class="movie__picture--img" src="${movieDB.images.w500}${movie.poster_path}" alt="Poster of ${movie.original_title}">
+						</figure>
+
+						<div class="movie__text">
+							<h2 class="movie__text--title">${movie.original_title}</h2>
+							<div class="movie__text--release">
+								<span>Release ${movie.release_date}</span>
+							</div>
+							<div class="movie__text--ratings">
+								<span class="ratings--rating">Rating ${movie.vote_average}</span> <span class="ratings--icon"></span> <span class="ratings--popularity">Popularity ${movie.popularity}</span>
+							</div>
+							<div class="movie__text--overview">${movie.overview}</div>
+						</div>
+					</aside>
+				`
+
+				moviesContent.insertAdjacentHTML('beforeend', htmlMovie)
+			});
+
+			loading.status = false
+			loading.endLoading()
+		}
+
+		function initMovies() {
+			loading.status = true
+			loading.startLoading()
+
+			getPopularMovies()
+				.then(data => renderMovies(data))
+		}
+
+		initMovies()
+	</script>
+</body>
+
+</html>
