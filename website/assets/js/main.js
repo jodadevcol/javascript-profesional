@@ -1,5 +1,6 @@
 import MediaPlayer from './MediaPlayer.js'
 import AutoPlay from './plugins/AutoPlay.js'
+import AutoPause from './plugins/AutoPause.js'
 
 const video = document.querySelector('[data-node="video"]')
 const btnTogglePlay = document.querySelector('[data-node="btn-togglePlay"]')
